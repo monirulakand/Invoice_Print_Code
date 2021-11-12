@@ -1,0 +1,23 @@
+
+       @media print {
+          body * {
+            visibility: hidden;
+          }
+
+          #not-print * {
+            display: none;
+          }
+
+          #to-print, #to-print * {
+            visibility: visible;
+          }
+
+          #to-print {
+            display: block !important;
+            position: fixed;
+            left: 20px !important;
+            top: 0;
+            width: 1000px !important;
+            height: 99%;
+          }
+        }

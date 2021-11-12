@@ -1,0 +1,165 @@
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-xl" role="document">
+
+            <div class="modal-content" v-if="click_event" :style="'display:'+ hide_or_vis +';'">
+
+              <div class="modal-header">
+                <h5 class="modal-title font22think ml-4" id="exampleModalLabel">BPS1000${ modal_products.sales_order_id }</h5>
+                 <button onclick="window.print()" type="button" class="btn btn-sm btn-primary">
+                 <i class="fa fa-print"></i> Print </button>
+              </div>
+                
+             <div id="to-print" class="modal-body text-center">
+                <div class="row justify-content-center">
+                   <div class="col-lg-12 col-md-12 p-5">
+
+                      <div class="invoice-00001">
+                            <div class="content-section">
+                                <div class="row inv--head-section">
+                                    <div class="col-md-4 col-sm-4 col-12 text-sm-left">
+                                        <h3 class="font22">Sales Order</h3>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-12 text-sm-left">
+                                        <img style="margin-left: auto; margin-right: auto;width: 50%; display: block;" class="" src="{% static 'assets/img/bp.png' %}">
+                                    </div>
+                                    <div class="col-sm-4 col-12 align-self-center text-sm-right">
+                                        <div class="company-info">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row inv--detail-section">
+
+                                    <div class="col-sm-7 align-self-center text-sm-left">
+                                        <p class="font14">Sales Order To</p>
+                                    </div>
+                                    
+                                    <div class="col-sm-5 align-self-center text-sm-right order-sm-0 order-1">
+                                        <p v-if ="'factory_info' in modal_products" class="font14">From : ${ modal_products.factory_info.factory_name }</p>
+                                    </div>
+                                    
+                                    <div class="col-sm-7 align-self-center text-sm-left">
+
+                                        <p v-if ="'customar_ledger_info' in modal_products" class="font13">${ modal_products.customar_ledger_info.customar_full_name }</p>
+                                        <p v-if ="'customar_ledger_info' in modal_products" class="font13">${ modal_products.customar_ledger_info.city_info.city_name }, ${ modal_products.customar_ledger_info.city_info.district_info.district_name }, ${ modal_products.customar_ledger_info.city_info.district_info.country_info.country_name }</p>
+
+                                        <p v-if ="'customar_ledger_info' in modal_products" class="font13">${ modal_products.customar_ledger_info.phone }</p>
+                                        <p v-if ="'customar_ledger_info' in modal_products" class="font13">${ modal_products.customar_ledger_info.email }</p>
+                                    </div>
+                                    <div class="col-sm-5 align-self-center  text-sm-right order-2">
+                                        <p class="font13"><span class="inv-title">Sales Order Number : </span> <span class="inv-number">[BPS1000${ modal_products.sales_order_id }]</span></p>
+
+                                        <p class="font13"><span class="inv-title">Date : </span> <span class="inv-date">${ modal_products.date }</span></p>
+
+                                        <p class="font13"><span class="inv-title">Vat Reg : </span> <span v-if ="'customar_ledger_info' in modal_products" class="inv-date">${ modal_products.customar_ledger_info.vat_reg_no }</span></p>
+
+                                        <p class="font13"><span class="inv-title">Shop Name: </span> <span v-if ="'customar_ledger_info' in modal_products" class="inv-date">${ modal_products.customar_ledger_info.shop_name }</span></p>
+                                    </div>
+                                </div>
+
+                                <div class="row inv--product-table-section">
+                                    <div class="col-12">
+                                        <div class="table-responsive" style="width: 100%;">
+                                            <table class="table table-bordered">
+                                                <thead class="">
+                                                    <tr>
+                                                        <th class="font14" scope="col">S.No</th>
+                                                        <th class="font14" scope="col">Items</th>
+                                                        <th class="font14" scope="col">Gift Name</th>
+                                                        <th class="font14" scope="col">Gift QTY</th>
+                                                        <th class="font14" scope="col">Bonus Name</th>
+                                                        <th class="font14" scope="col">Bonus QTY</th>
+                                                        <th class="font14" scope="col">Qty</th>
+                                                        <th class="font14" scope="col">Sell Price</th>
+                                                        <th class="font14" scope="col">Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(single, index) in modal_products.sales_order_product">
+                                                        <td class="font13">${ index+1 }</td>
+                                                        <td class="font13">${single.product_info.product_category_name}</td>
+                                                        <td class="font13">${single.gift_info.gift_name}</td>
+                                                        <td class="font13">${single.qty_gift}</td>
+                                                        <td class="font13">${single.bonus_info.product_info.product_category_name}</td>
+                                                        <td class="font13">${single.qty_bonus}</td>
+                                                        <td class="font13">P-${single.product_qty}</td>
+                                                        <td class="font13">${single.sall_static_price}৳</td>
+                                                        <td class="font13">${single.amount}৳</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-5 mb-5">
+                                    <div class="col-md-6 col-sm-6 col-12">
+                                          <h5 class="font16 text-sm-left ml-3">Payment Information:</h5>
+                                          <h5 class="font14 text-sm-left ml-3">Payment Type:   &nbsp;&nbsp;${ modal_products.total_qty }</h5>
+                                          <h5 class="font14 text-sm-left ml-3">Account Number: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${ modal_products.total_amount }৳</h5>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-12 ">     
+                                         <div class="table-responsive" style="width: 100%;">
+                                            <table class="table table-bordered">
+                                                <thead class="">
+                                                    <!-- <tr>
+                                                        <th class="font14" scope="col">S.No</th>
+                                                        <th class="font14" scope="col">Items</th>
+                                                    </tr> -->
+                                                </thead>
+                                                <tbody>
+                                                     <tr>
+                                                      <th scope="row">Total Quantity </th>
+                                                      <td>23456</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <th scope="row">Total Amount</th>
+                                                      <td>10000000৳</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row mt-4">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+                                        <hr class="w-50" style="border-color: #000000">
+                                        <h5 class="font14">Ladger Signeture:</h5>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+                                        
+                                    </div>
+                                     <div class="col-lg-4 col-md-4 col-sm-4 col-12">
+                                       <hr class="w-50" style="border-color: #000000">
+                                        <h5 class="font14">Authority Signeture:</h5>
+                                    </div>
+                                </div>
+
+                                <div class="row note">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                          <h5 class="font13">N.B: Lorem Ipsum is simply dummy text of the printing and typesetting industry.</h5>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div> 
+
+
+                   </div>
+                </div>
+            </div>
+
+
+              <div class="modal-footer">
+                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
